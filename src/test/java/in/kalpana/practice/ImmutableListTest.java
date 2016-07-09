@@ -57,4 +57,19 @@ public class ImmutableListTest {
         assertThat(list.size(), is(3));
     }
 
+    @Test
+    public void shouldDeleteAnElementFromExistingList() {
+        ImmutableList<Integer> list = ImmutableList.<Integer>EmptyList()
+                .add(1)
+                .add(2)
+                .add(3);
+        ImmutableList<Integer> deletedList = list.delete(3);
+        assertThat(deletedList.exists(3), is(false));
+
+        ImmutableList<Integer> deletedList2 = list.delete(4);
+
+        for (int element = 1; element <=3 ; element++) {
+            assertThat(deletedList2.exists(element), is(true));
+        }
+    }
 }
