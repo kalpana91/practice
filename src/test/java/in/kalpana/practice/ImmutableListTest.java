@@ -2,6 +2,7 @@ package in.kalpana.practice;
 
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import static org.hamcrest.Matchers.is;
@@ -96,5 +97,26 @@ public class ImmutableListTest {
 
         ImmutableList<Integer> unmodifiedList = list.delete(4);
         assertTrue(unmodifiedList == list);
+    }
+
+    @Test
+    public void shouldBeAbleToIterateOverTheList() {
+        ImmutableList<Integer> list = ImmutableList.<Integer>EmptyList()
+                .add(1)
+                .add(2)
+                .add(3);
+
+        int sum = 0;
+        for (Integer integer : list) {
+            sum += integer;
+        }
+
+        assertThat(sum, is(6));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldReturnNoSuchElementExceptionForEmptyList() {
+        ImmutableList<Integer> list = ImmutableList.EmptyList();
+        list.iterator().next();
     }
 }

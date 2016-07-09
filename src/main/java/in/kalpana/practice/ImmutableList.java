@@ -1,5 +1,8 @@
 package in.kalpana.practice;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class ImmutableList<T> implements List<T> {
 
     ImmutableList<T> tail;
@@ -32,5 +35,27 @@ public class ImmutableList<T> implements List<T> {
         if (head == null || tail == null || !exists(elem)) return this;
         else if (head.equals(elem)) return tail;
         else return new ImmutableList<T>(head, tail.delete(elem));
+    }
+
+    public Iterator<T> iterator() {
+        final ImmutableList<T> me = this;
+        return new Iterator<T>() {
+
+            ImmutableList<T> list = me;
+
+            public boolean hasNext() {
+                return list.head != null;
+            }
+
+            public T next() {
+                if(!hasNext()) throw new NoSuchElementException("List is empty");
+                T next = list.head;
+                list = list.tail;
+                return next;
+            }
+
+            public void remove() {
+            }
+        };
     }
 }
