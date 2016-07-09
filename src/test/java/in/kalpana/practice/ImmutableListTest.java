@@ -68,8 +68,33 @@ public class ImmutableListTest {
 
         ImmutableList<Integer> deletedList2 = list.delete(4);
 
-        for (int element = 1; element <=3 ; element++) {
+        for (int element = 1; element <= 3; element++) {
             assertThat(deletedList2.exists(element), is(true));
         }
+    }
+
+    @Test
+    public void shouldDeleteNonHeadElementFromList() {
+        ImmutableList<Integer> list = ImmutableList.<Integer>EmptyList()
+                .add(1)
+                .add(2)
+                .add(3);
+
+        ImmutableList<Integer> deletedList = list.delete(2);
+        assertThat(deletedList.size(), is(2));
+        assertThat(deletedList.exists(2), is(false));
+        assertThat(deletedList.exists(1), is(true));
+        assertThat(deletedList.exists(3), is(true));
+    }
+
+    @Test
+    public void shouldReturnSameListWhenTheresNothingToDelete() {
+        ImmutableList<Integer> list = ImmutableList.<Integer>EmptyList()
+                .add(1)
+                .add(2)
+                .add(3);
+
+        ImmutableList<Integer> unmodifiedList = list.delete(4);
+        assertTrue(unmodifiedList == list);
     }
 }

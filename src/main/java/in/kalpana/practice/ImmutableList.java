@@ -29,7 +29,8 @@ public class ImmutableList<T> implements List<T> {
     }
 
     public ImmutableList<T> delete(T elem) {
-        if (head.equals(elem)) return tail;
-        return this;
+        if (head == null || tail == null || !exists(elem)) return this;
+        else if (head.equals(elem)) return tail;
+        else return new ImmutableList<T>(head, tail.delete(elem));
     }
 }
